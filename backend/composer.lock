@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "373979245062287af1dc5749d8e25793",
+    "content-hash": "642d642bc8cefc3d77b5551224ee54de",
     "packages": [
         {
             "name": "brick/math",
@@ -1057,6 +1057,54 @@
                 }
             ],
             "time": "2026-05-23T22:00:21+00:00"
+        },
+        {
+            "name": "kabochan73/er-generate",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kabochan73/ER-Generate.git",
+                "reference": "b8376edf046a0f14b5b58706ddf297176a9628de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kabochan73/ER-Generate/zipball/b8376edf046a0f14b5b58706ddf297176a9628de",
+                "reference": "b8376edf046a0f14b5b58706ddf297176a9628de",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kabochan73\\ErGenerate\\ErGenerateServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kabochan73\\ErGenerate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kabochan73"
+                }
+            ],
+            "description": "Generate Mermaid ER diagrams from Laravel migration files",
+            "support": {
+                "issues": "https://github.com/kabochan73/ER-Generate/issues",
+                "source": "https://github.com/kabochan73/ER-Generate/tree/v1.0.0"
+            },
+            "time": "2026-06-02T09:45:34+00:00"
         },
         {
             "name": "laravel/boost",
