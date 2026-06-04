@@ -124,6 +124,20 @@ class ArticleTest extends TestCase
         $this->assertDatabaseHas('articles', ['slug' => 'my-new-post']);
     }
 
+    public function test_日本語タイトルのスラッグはUUIDが自動生成される(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user, 'sanctum')->postJson('/api/articles', [
+            'title' => '日本語タイトル',
+            'content' => '本文です。',
+            'status' => ArticleStatus::Draft->value,
+        ]);
+
+        $article = Article::first();
+        $this->assertNotEmpty($article->slug);
+    }
+
     public function test_公開ステータスで作成するとpublished_atが自動セットされる(): void
     {
         $user = User::factory()->create();

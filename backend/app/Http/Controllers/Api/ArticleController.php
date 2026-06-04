@@ -72,7 +72,7 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request): ArticleResource
     {
         $data = $request->validated();
-        $data['slug'] ??= Str::slug($data['title']);
+        $data['slug'] ??= Str::slug($data['title']) ?: Str::uuid()->toString();
 
         if ($data['status'] === ArticleStatus::Published->value && empty($data['published_at'])) {
             $data['published_at'] = now();
