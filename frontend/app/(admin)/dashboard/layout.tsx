@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+import { logout } from './actions'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies()
@@ -22,6 +23,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <Link href="/dashboard/tags" className="text-sm text-gray-600 hover:text-gray-900">
               タグ管理
             </Link>
+            <form action={logout}>
+              <button type="submit" className="text-sm text-gray-600 hover:text-gray-900">
+                ログアウト
+              </button>
+            </form>
           </nav>
         </div>
       </header>
