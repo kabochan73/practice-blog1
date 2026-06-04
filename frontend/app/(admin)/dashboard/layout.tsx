@@ -1,0 +1,33 @@
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import Link from 'next/link'
+
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')
+
+  if (!token) {
+    redirect('/login')
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+          <span className="text-xl font-bold text-gray-900">管理画面</span>
+          <nav className="flex items-center gap-6">
+            <Link href="/dashboard/articles" className="text-sm text-gray-600 hover:text-gray-900">
+              記事管理
+            </Link>
+            <Link href="/dashboard/tags" className="text-sm text-gray-600 hover:text-gray-900">
+              タグ管理
+            </Link>
+          </nav>
+        </div>
+      </header>
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        {children}
+      </main>
+    </div>
+  )
+}
