@@ -64,6 +64,37 @@ class ArticleTest extends TestCase
         $response->assertNotFound();
     }
 
+    // ==================== adminShow ====================
+
+    public function test_管理者がIDで記事詳細を取得できる(): void
+    {
+        $user = User::factory()->create();
+        $article = Article::factory()->create();
+
+        $response = $this->actingAs($user, 'sanctum')->getJson("/api/admin/articles/{$article->id}");
+
+        $response->assertOk()->assertJsonPath('data.id', $article->id);
+    }
+
+    public function test_管理者が下書き記事をIDで取得できる(): void
+    {
+        $user = User::factory()->create();
+        $article = Article::factory()->create(['status' => ArticleStatus::Draft]);
+
+        $response = $this->actingAs($user, 'sanctum')->getJson("/api/admin/articles/{$article->id}");
+
+        $response->assertOk()->assertJsonPath('data.status', 'draft');
+    }
+
+    public function test_未認証では管理用記事詳細を取得できない(): void
+    {
+        $article = Article::factory()->create();
+
+        $response = $this->getJson("/api/admin/articles/{$article->id}");
+
+        $response->assertUnauthorized();
+    }
+
     // ==================== store ====================
 
     public function test_管理者が記事を作成できる(): void

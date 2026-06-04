@@ -44,6 +44,14 @@ class ArticleController extends Controller
     }
 
     /**
+     * IDで記事の詳細を返す（管理側用・下書き含む）
+     */
+    public function adminShow(Article $article): ArticleResource
+    {
+        return new ArticleResource($article->load('tags'));
+    }
+
+    /**
      * スラッグで公開済み記事の詳細を返す（公開側用）
      */
     public function show(string $slug): ArticleResource
