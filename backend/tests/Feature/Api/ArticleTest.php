@@ -181,6 +181,48 @@ class ArticleTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    // ==================== adminIndex ====================
+
+    public function test_管理者が下書きを含む全記事一覧を取得できる(): void
+    {
+        $user = User::factory()->create();
+        Article::factory()->published()->count(2)->create();
+        Article::factory()->count(3)->create(); // 下書き
+
+        $response = $this->actingAs($user, 'sanctum')->getJson('/api/admin/articles');
+
+        $response->assertOk()->assertJsonCount(5, 'data');
+    }
+
+    public function test_statusパラメータで下書きのみ取得できる(): void
+    {
+        $user = User::factory()->create();
+        Article::factory()->published()->count(2)->create();
+        Article::factory()->count(3)->create(); // 下書き
+
+        $response = $this->actingAs($user, 'sanctum')->getJson('/api/admin/articles?status=draft');
+
+        $response->assertOk()->assertJsonCount(3, 'data');
+    }
+
+    public function test_statusパラメータで公開済みのみ取得できる(): void
+    {
+        $user = User::factory()->create();
+        Article::factory()->published()->count(2)->create();
+        Article::factory()->count(3)->create(); // 下書き
+
+        $response = $this->actingAs($user, 'sanctum')->getJson('/api/admin/articles?status=published');
+
+        $response->assertOk()->assertJsonCount(2, 'data');
+    }
+
+    public function test_未認証では管理用記事一覧を取得できない(): void
+    {
+        $response = $this->getJson('/api/admin/articles');
+
+        $response->assertUnauthorized();
+    }
+
     // ==================== destroy ====================
 
     public function test_管理者が記事を削除できる(): void

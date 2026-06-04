@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 
@@ -25,6 +26,21 @@ class ArticleController extends Controller
             ->get();
 
         return ArticleResource::collection($articles);
+    }
+
+    /**
+     * 全記事の一覧を返す（管理側用）
+     * ?status=draft または ?status=published でフィルタ可能
+     */
+    public function adminIndex(Request $request): AnonymousResourceCollection
+    {
+        $query = Article::with('tags')->orderByDesc('created_at');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->string('status'));
+        }
+
+        return ArticleResource::collection($query->get());
     }
 
     /**
