@@ -20,6 +20,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <Link href="/dashboard/articles" className="text-sm text-gray-600 hover:text-gray-900">
               記事管理
             </Link>
+            <Link href="/dashboard/articles/drafts" className="text-sm text-gray-600 hover:text-gray-900">
+              下書き
+            </Link>
             <Link href="/dashboard/tags" className="text-sm text-gray-600 hover:text-gray-900">
               タグ管理
             </Link>
